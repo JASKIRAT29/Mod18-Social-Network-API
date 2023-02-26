@@ -28,6 +28,42 @@ const responseSchema = new Schema(
     },
   }
 );
+const ThoughtSchema = new Schema(
+    {
+      thoughtText: {
+        type: String,
+        required: true,
+        maxlength: 50,
+        minlength: 4,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp),
+      },
+      username: {
+        type: String,
+        required: true,
+      },
+      reactions: [ReactionSchema],
+    },
+    {
+      toJSON: {
+        getters: true,
+      },
+      id: false,
+    }
+  );
+  // Create a virtual property `responses` that gets the amount of response per thought
+ThoughtSchema
+.virtual("reactionCount")
+// Getter
+.get(function () {
+  return this.reactions.length;
+});
+
+// Initialize our Video model
+const Thought = model("Thought", ThoughtSchema);
 
 
 module.exports = Thought;
