@@ -62,7 +62,7 @@ ThoughtSchema
   return this.reactions.length;
 });
 
-// Initialize our Video model
+// Initialize our thought model
 const Thought = model("Thought", ThoughtSchema);
 
 
