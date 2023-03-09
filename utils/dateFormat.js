@@ -90,9 +90,3 @@ module.exports = (
     return formattedTimeStamp;
 };
 
-
-    
-    
-    
-    
-    

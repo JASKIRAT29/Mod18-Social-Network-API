@@ -2,29 +2,29 @@ const { User} = require('../models');
 
 const userController = {
   // Get all users
-  getUsers(req, res) {
+  getUsers(req,res) {
     User.find()
       .then(userData => res.json(userData))
-      .catch(err => {
+      .catch((err)=> {
         console.log(err);
         res.status(400).json(err);
   });
 },
-  // Get a add user
-  addUser({body},res) {
+  // Get a create user
+  createUser({body},res) {
     User.create(body)
       .then(userData => res.json(userData))
       .catch((err) => res.status(400).json(err));
   },
   // create a id of user
-  getUserByID({params}, res) {
+  getSingleUser({params}, res) {
     User.findOne({ _id: params.id })
       .then(userData => res.json(userData))
       .catch(err => res.status(400).json(err));
   },
   // create a update user
   updateUser({params,body}, res) {
-    User.findOneAndUpdate({ _id: req.params.id},body)
+    User.findOneAndUpdate({ _id:params.id},body)
       .then(userData => {
         if(!userData) {
           res.status(404).json({ message: 'No user with that ID' })
@@ -36,7 +36,7 @@ const userController = {
   },
   // Delete a user and associated apps
   deleteUser({params}, res) {
-    User.findOneAndDelete({ _id: req.params.id})
+    User.findOneAndDelete({ _id:params.id})
       .then(userData => {
         if(!userData) {
           res.status(404).json({ message: 'No user with that ID' })
