@@ -1,8 +1,8 @@
-const { Thought, User } = require('../models');
+const { Thought, User } = require("../models");
 
 const thoughtController = {
   // Get all thoughts
-  getThought(req, res) {
+  getThoughts(req, res) {
     Thought.find()
     .populated({
       path: "reactions",
@@ -17,16 +17,16 @@ const thoughtController = {
       });
 },
   // Get a ID of thoughts
-  getThoughtByID({params}, res) {
-    Thought.findOne({ _id: req.params.thoughtId })
+  getSingleThought({params}, res) {
+    Thought.findOne({ _id:params.thoughtId })
       .then(thoughtData => res.json(thoughtData))
         .catch(err => {
             console.log(err);
           res.status(400).json(err);
   });
         },
-  // Add a thought
-  addThought({params, body}, res) {
+  // Create a thought
+  createThought({params, body}, res) {
     Thought.create(body)
       .then(({_id}) => {
          return User.findOneAndUpdate(
@@ -46,7 +46,7 @@ const thoughtController = {
 },
   // Delete a thought
   deleteThought({params}, res) {
-    Thought.findByIdAndDelete({ _id: req.params.courseId })
+    Thought.findByIdAndDelete({ _id:params.courseId })
       .then(thoughtData => {
         if (!thoughtData) {
           res.status(404).json({ message: 'No thoughts with that ID' })
@@ -85,7 +85,7 @@ addReaction({params, body}, res) {
     .catch(err => res.json(err));
 },
 // Delete a reaction
-deleteReaction({params}, res) {
+removeReaction({params}, res) {
     Thought.findOneAndUpdate(
             {_id: params.thoughtId},
             {$pull: {reaction: {reactionId: params.reactionId}}},
@@ -101,4 +101,4 @@ deleteReaction({params}, res) {
     .catch(err => res.json(err));
 }
 }
-module.export = thoughtController;
+module.exports = thoughtController;

@@ -1,7 +1,7 @@
-const { Schema,models, Types } = require('mongoose');
-const dataFormat = require("../utils/dataFormat")
-
-const responseSchema = new Schema(
+const { Schema,model, Types } = require('mongoose');
+// const dateFormat = require("../utils")
+const dateFormat = require('../utils/dateFormat');
+const ReactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
